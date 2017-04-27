@@ -3,10 +3,12 @@ import resolvers from './resolvers'
 
 const schema = `
 type Account {
-  id: Int
+  id: ID!
   firstname: String
   lastname: String
   fullname: String
+  email: String
+  login: String
   team: String
   navid: String
   location: String
@@ -31,6 +33,7 @@ type Incident {
   Status: String,
   summary: String,
   account: Account
+  kudo: Kudo
 }
 
 type Kudo {
@@ -52,8 +55,14 @@ type Query {
   kudo(ownerrep_name: String): [Kudo]
   getFortuneCookie: String
 }
+
+type Mutation {
+  addaccount(firstname: String!, lastname:String!, team: String, navid:String): Account
+  addChannel(naam: String): String
+}
 schema {
   query: Query
+  mutation: Mutation
 }
 `;
 

@@ -1,5 +1,7 @@
 import { Account, Incident, Kudo } from './model';
 
+//⚠️
+
 const resolvers = {
   Query: {
     account(root_, args) {
@@ -9,9 +11,28 @@ const resolvers = {
       return Incident.findAll({ where: args });
     },
     kudo(_, args) {
-      console.log('Kudo')
+      console.log('Kudo');
       return Kudo.findAll({ where: args });
     }
+  },
+  Mutation: {
+    
+    addaccount: (root, args) => {
+      const newaccount = {
+        firstname:args.firstname,
+        lastname: args.lastname,
+        team: args.team || 'TLS',
+        fullname: args.firstname+' '+args.lastname,
+        navid: args.navid || '1234567',
+        login: args.navid || 'infor\\test',
+        email: `${args.firstname}.${args.lastname}@infor.com`
+      }
+      return Account.create(newaccount);
+    },
+    addChannel: (root, args) => {
+      const newChannel = { id: 2, name: args.name };
+      return "newChannel";
+    },
   },
   Account: {
     incidents(account) {
@@ -28,10 +49,16 @@ const resolvers = {
   },
   Incident: {
     account(incident) {
-      console.log('😠😠😠😠😠 Account');
       return Account.findOne({
         where: {
           navid: incident.OwnerID
+        }
+      });
+    },
+    kudo(incident) {
+      return Kudo.findOne({
+        where: {
+          incident_id: incident.incidentID
         }
       });
     }
@@ -46,5 +73,5 @@ const resolvers = {
     }
   }
 };
-
+console.log(resolvers)
 export default resolvers;

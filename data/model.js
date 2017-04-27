@@ -29,6 +29,8 @@ const Account = db.define(
   }
 );
 
+Account.removeAttribute('id');
+
 const Incident = db.define('v_incidents', {
   UIC: {
           type: Sequelize.UUID,
