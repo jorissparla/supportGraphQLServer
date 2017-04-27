@@ -1,22 +1,28 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { graphqlExpress, graphiqlExpress  } from 'graphql-server-express';
-import Schema from './data/schema';
+import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
+import schema from './data/schema';
 import Mocks from './data/mocks';
-import { printSchema } from 'graphql/utilities/schemaPrinter';
+import cors from 'cors';
 
-const GRAPHQL_PORT = 3003;
+const PORT = 4000;
+const server = express();
+server.use('*', cors({ origin: 'http://localhost:3000' }));
+server.use(
+  '/graphql',
+  bodyParser.json(),
+  graphqlExpress({
+    schema
+  })
+);
 
-var graphQLServer = express();
+server.use(
+  '/graphiql',
+  graphiqlExpress({
+    endpointURL: '/graphql'
+  })
+);
 
-graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({
-  schema: Schema
-}));
-
-graphQLServer.use('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql'
-}));
-
-graphQLServer.listen(GRAPHQL_PORT, () =>
-  console.log(`GraphQL Server is now running on http://localhost:${GRAPHQL_PORT}/graphql`)
+server.listen(PORT, () =>
+  console.log(`GraphQL Server is now running on http://localhost:${PORT}`)
 );
