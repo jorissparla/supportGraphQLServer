@@ -4,7 +4,7 @@ const fs = require('fs');
 import bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import schema from './data/schema';
-import Mocks from './data/mocks';
+//import Mocks from './data/mocks';
 import cors from 'cors';
 
 const PORT = 4000;

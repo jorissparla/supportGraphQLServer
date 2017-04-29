@@ -16,23 +16,22 @@ const resolvers = {
     }
   },
   Mutation: {
-    
     addaccount: (root, args) => {
       const newaccount = {
-        firstname:args.firstname,
+        firstname: args.firstname,
         lastname: args.lastname,
         team: args.team || 'TLS',
-        fullname: args.firstname+' '+args.lastname,
+        fullname: args.firstname + ' ' + args.lastname,
         navid: args.navid || '1234567',
         login: args.navid || 'infor\\test',
         email: `${args.firstname}.${args.lastname}@infor.com`
-      }
+      };
       return Account.create(newaccount);
     },
     addChannel: (root, args) => {
       const newChannel = { id: 2, name: args.name };
-      return "newChannel";
-    },
+      return 'newChannel';
+    }
   },
   Account: {
     incidents(account) {
@@ -73,5 +72,5 @@ const resolvers = {
     }
   }
 };
-console.log(resolvers)
+console.log(`resolvers loaded`);
 export default resolvers;
